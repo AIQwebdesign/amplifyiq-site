@@ -1,0 +1,1 @@
+import{a}from"./chunk-VJ4CSJOH.js";import{b as r}from"./chunk-CAXPGCTE.js";import{Sc as s}from"./chunk-3YINNC53.js";var m=class extends r(s,a){constructor(t,e,o){super(),this.super_Entity(t,e),this.context=o,this.objectHelper.update()}updateState(t,e){this.updateState_Entity(t,e)}};export{m as a};

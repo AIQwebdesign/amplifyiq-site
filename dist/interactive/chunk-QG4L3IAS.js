@@ -1,0 +1,1 @@
+var u=Math.fround;function r(n){return Math.round(1e9*n)}function c(n,t){return(function(e){let a=Math.trunc(e/1e9),o=e-1e9*a;return u(u(a)+u(u(o)/u(1e9)))})(r(n)-r(t))}function f(n,t){return(r(n)+r(t))/1e9}function i(n,t,e){return r(n)-r(t)<r(e)}export{c as a,f as b,i as c};
