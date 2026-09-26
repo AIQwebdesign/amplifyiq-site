@@ -1,0 +1,1 @@
+import{h as i}from"./chunk-BBC56QJ6.js";function c(n){if(n.component){let e=n.component.instances.indexOf(n);e>=0&&n.component.instances.splice(e,1);for(let t of n.children)i.is(t)&&c(t)}}export{c as a};

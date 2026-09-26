@@ -16,7 +16,8 @@ The FORM STUDIO comparison is explicitly labelled as a conceptual demonstration 
 
 - `dist/index.html`: semantic, indexable page sections, local-business structured data and content.
 - `dist/styles.css`: shared visual tokens, responsive layouts, focus states and reduced-motion presentation.
-- `dist/app.js`: native dialog menu, accessible range comparison, manual testimonial navigation, scroll-driven portfolio and process.
+- `dist/app.js`: native dialog menu, accessible range comparison, manual testimonial navigation and scroll-driven process.
+- `src/work.tsx` and `src/components/ui/3-d-coverflow-carousel.tsx`: landscape 3D project carousel using the original four project cards, with arrows, pagination, scoped keyboard controls, swipe and pausable autoplay. Replaces the pinned portfolio scroll. Static project cards remain available without JavaScript.
 - `src/hero.tsx` and `src/components/ui/splite.tsx`: supplied lazy React Spline component with a transparent background, mobile sizing, loading/error states and lifecycle handling. Bundled to `dist/interactive`.
 - `dist/refinements.css` and `dist/scroll-effects.js`: supplied liquid-glass, circle inversion and cinematic footer adapted to the existing page.
 - `dist/components.js`: native WebGL adaptation of UI Capsule's Gradient Orb and a pointer-driven adaptation of Manu Arora's Glowing Effect from 21st.dev.
