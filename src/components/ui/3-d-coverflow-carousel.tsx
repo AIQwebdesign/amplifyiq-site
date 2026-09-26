@@ -7,7 +7,6 @@ export interface CarouselItem { title: string; tag: string; location: string; de
 export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [visible, setVisible] = useState(false);
   const [hidden, setHidden] = useState(document.hidden);
@@ -17,7 +16,7 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
   const total=items.length;
   const move=useCallback((direction:number)=>setCurrent(index=>(index+direction+total)%total),[total]);
   useEffect(()=>{
-    const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting),{threshold:.35});
+    const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting && entry.intersectionRatio>=.15),{threshold:[0,.15]});
     if(root.current)observer.observe(root.current);
     const media=matchMedia('(prefers-reduced-motion: reduce)');
     const changed=()=>setReduce(media.matches),visibility=()=>setHidden(document.hidden);
@@ -25,15 +24,16 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
     return()=>{observer.disconnect();media.removeEventListener('change',changed);document.removeEventListener('visibilitychange',visibility)};
   },[]);
   useEffect(()=>{
-    if(paused||hovered||focused||!visible||hidden||reduce||total<2)return;
-    const interval=setInterval(()=>move(1),3000);return()=>clearInterval(interval);
-  },[paused,hovered,focused,visible,hidden,reduce,total,move]);
+    if(paused||focused||!visible||hidden||reduce||total<2)return;
+    let interval:ReturnType<typeof setInterval>|undefined;
+    const first=setTimeout(()=>{move(1);interval=setInterval(()=>move(1),3000)},900);
+    return()=>{clearTimeout(first);if(interval!==undefined)clearInterval(interval)};
+  },[paused,focused,visible,hidden,reduce,total,move]);
   useEffect(()=>{const count=document.getElementById('work-count');if(count)count.textContent=String(current+1).padStart(2,'0')},[current]);
   const select=(index:number)=>{setPaused(true);setCurrent(index)};
   const navigate=(direction:number)=>{setPaused(true);move(direction)};
   if(!total)return null;
   return <div className="coverflow" ref={root} role="region" aria-roledescription="carousel" aria-label="Selected websites" tabIndex={0}
-    onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}
     onFocusCapture={()=>setFocused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget))setFocused(false)}}
     onKeyDown={event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();navigate(event.key==='ArrowLeft'?-1:1)}}}>
     <div className="coverflow-ambience" aria-hidden="true">{items.map((item,index)=><img key={item.url} src={item.img} alt="" style={{opacity:index===current?1:0}} />)}</div>
