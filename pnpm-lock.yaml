@@ -14,6 +14,12 @@ importers:
       '@splinetool/runtime':
         specifier: ^2.0.57
         version: 2.0.57
+      framer-motion:
+        specifier: ^13.4.4
+        version: 13.4.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      lucide-react:
+        specifier: ^1.48.0
+        version: 1.48.0(react@19.3.0)
       react:
         specifier: ^19.3.0
         version: 19.3.0
@@ -345,8 +351,30 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  framer-motion@13.4.4:
+    resolution: {integrity: sha512-lbsZO95NGbulo6apz70zEt6Vxf/anoRwQI2ECEc/EQYWO5CGbITtl7plDW8P/VXgXw6e8wrbhH4a9i+ygke0Mg==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+
+  lucide-react@1.48.0:
+    resolution: {integrity: sha512-R0CIKY/fXiC6y9xRBADgsK+VW2p/pcTJOMhLZf1T+uG+vJUvyUR02nGOgmIIC7MPkiNK4Ox8QDnbqF8rJYWPZQ==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  motion-dom@13.4.4:
+    resolution: {integrity: sha512-z2qN3RUABSci4G7cr5aHTFhqPNCWJsEMMfRlzxqtANQsSCIbVJmHvMV288m5x7doEQBTYbRTWbKdztmquCn4Sw==}
+
+  motion-utils@13.3.0:
+    resolution: {integrity: sha512-sgSschQp7EseHInIlR7hBbMuvet3RA0bs28KPZAXJcGKGdxHGvh1ogpYDilY3bOMtl73EqPNmp75sAKHYPU5sg==}
 
   on-change@4.0.0:
     resolution: {integrity: sha512-PTu7C9Jsz4b+sNMDpH0eZFTr7uxdOtoDWRnhaVNK50bgrrnW5nvbWI0jm5DG9qOoTnIhBzE9xoKVFPD9xgtbdg==}
@@ -372,6 +400,9 @@ packages:
 
   thumbhash@0.1.1:
     resolution: {integrity: sha512-kH5pKeIIBPQXAOni2AiY/Cu/NKdkFREdpH+TLdM0g6WA7RriCv0kPLgP731ady67MhTAqrVG/4mnEeibVuCJcg==}
+
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
@@ -574,7 +605,26 @@ snapshots:
       '@esbuild/win32-ia32': 0.28.2
       '@esbuild/win32-x64': 0.28.2
 
+  framer-motion@13.4.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+    dependencies:
+      motion-dom: 13.4.4
+      motion-utils: 13.3.0
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+
   lodash.debounce@4.0.8: {}
+
+  lucide-react@1.48.0(react@19.3.0):
+    dependencies:
+      react: 19.3.0
+
+  motion-dom@13.4.4:
+    dependencies:
+      motion-utils: 13.3.0
+
+  motion-utils@13.3.0: {}
 
   on-change@4.0.0: {}
 
@@ -592,6 +642,8 @@ snapshots:
   semver-compare@1.0.0: {}
 
   thumbhash@0.1.1: {}
+
+  tslib@2.8.1: {}
 
   typescript@7.0.2:
     optionalDependencies:
