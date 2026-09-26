@@ -13,6 +13,7 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
   const [reduce, setReduce] = useState(matchMedia('(prefers-reduced-motion: reduce)').matches);
   const root = useRef<HTMLDivElement>(null);
   const touch = useRef({x:0,y:0});
+  const swiped = useRef(false);
   const total=items.length;
   const move=useCallback((direction:number)=>setCurrent(index=>(index+direction+total)%total),[total]);
   useEffect(()=>{
@@ -34,11 +35,12 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
   const navigate=(direction:number)=>{setPaused(true);move(direction)};
   if(!total)return null;
   return <div className="coverflow" ref={root} role="region" aria-roledescription="carousel" aria-label="Selected websites" tabIndex={0}
-    onFocusCapture={()=>setFocused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget))setFocused(false)}}
+    onFocusCapture={event=>setFocused(event.target.matches(':focus-visible'))} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget))setFocused(false)}}
     onKeyDown={event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();navigate(event.key==='ArrowLeft'?-1:1)}}}>
     <div className="coverflow-ambience" aria-hidden="true">{items.map((item,index)=><img key={item.url} src={item.img} alt="" style={{opacity:index===current?1:0}} />)}</div>
-    <div className="coverflow-stage" onTouchStart={event=>{touch.current={x:event.touches[0].clientX,y:event.touches[0].clientY}}}
-      onTouchEnd={event=>{const dx=event.changedTouches[0].clientX-touch.current.x,dy=event.changedTouches[0].clientY-touch.current.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))navigate(dx<0?1:-1)}}>
+    <div className="coverflow-stage" onTouchStart={event=>{swiped.current=false;touch.current={x:event.touches[0].clientX,y:event.touches[0].clientY}}}
+      onTouchEnd={event=>{const dx=event.changedTouches[0].clientX-touch.current.x,dy=event.changedTouches[0].clientY-touch.current.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){swiped.current=true;navigate(dx<0?1:-1)}}}
+      onClickCapture={event=>{if(swiped.current){event.preventDefault();event.stopPropagation();swiped.current=false}}}>
       {items.map((item,index)=>{
         const offset=(index-current+total)%total;
         const center=offset===0;
@@ -64,7 +66,7 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
       <button className="coverflow-arrow liquid-glass" onClick={()=>navigate(1)} aria-label="Next website">→</button>
     </div>
     <div className="coverflow-bottom mono"><span aria-live={paused||focused?'polite':'off'}>{String(current+1).padStart(2,'0')} / {String(total).padStart(2,'0')} — {items[current].title}</span>
-      {!reduce&&<button onClick={()=>setPaused(value=>!value)} aria-label={paused?'Play project slideshow':'Pause project slideshow'}><span aria-hidden="true">{paused?'▷':'Ⅱ'}</span></button>}
+      {!reduce&&<button onClick={()=>{setFocused(false);setPaused(value=>!value)}} aria-label={paused?'Play project slideshow':'Pause project slideshow'}><span aria-hidden="true">{paused?'▷':'Ⅱ'}</span></button>}
     </div>
   </div>;
 }

@@ -1,0 +1,58 @@
+/* Shared curtain behavior across phones, tablets and desktop. */
+.footer-curtain{height:max(100svh,760px);min-height:0;overflow:hidden;clip-path:inset(0);isolation:isolate}
+footer.cinematic-footer{position:absolute;inset:0;width:100%;height:100%;min-height:0;will-change:transform}
+.footer-center{min-height:0;padding:90px 24px 150px;gap:24px}
+.footer-center h2{font-size:clamp(58px,8vw,115px);line-height:1.12}
+.footer-giant{bottom:90px}
+.footer-bottom{padding-bottom:max(24px,env(safe-area-inset-bottom));flex-shrink:0}
+/* Touch targets stay generous even when their visual glyph is small. */
+.menu-toggle,.menu-close,.coverflow-bottom button{min-width:44px;min-height:44px}
+.coverflow-dots button{width:44px;min-height:44px}
+.coverflow-dots{gap:0}.coverflow-controls{gap:16px}
+.hero-work-link.liquid-glass,.text-link.liquid-glass,.footer-socials .liquid-glass{min-height:44px}
+.glass-content{white-space:normal}
+@media(max-width:650px){
+  html{scroll-padding-top:84px}
+  .footer-curtain{height:max(100svh,720px)}
+  .footer-center{padding:82px 18px 118px;gap:18px}
+  .footer-center h2{font-size:clamp(52px,16vw,72px);margin-bottom:4px}
+  .footer-center>.mono{font-size:9px;max-width:270px;line-height:1.7}
+  .footer-links{gap:12px}.footer-links .button{min-height:48px;padding:12px 22px}
+  .footer-socials{gap:8px;max-width:360px}.footer-socials .liquid-glass{font-size:12px;padding:10px 16px}
+  .footer-giant{bottom:108px;font-size:15vw}
+  .footer-bottom{padding:15px 6% max(16px,env(safe-area-inset-bottom));gap:10px}
+  .footer-bottom>.mono{font-size:8px;line-height:1.5}
+  .hero-bottom .button{padding:12px 17px;min-height:48px}
+  .hero-bottom .glass-content{gap:16px}
+  .hero-topline{gap:14px}.hero-topline>span{flex:1;min-width:0}
+  .work-heading{align-items:flex-start;gap:18px}
+  .work-heading h2{font-size:clamp(32px,9.5vw,44px)}
+  .work-heading>.mono{flex-shrink:0;font-size:8px;padding-top:4px}
+  .coverflow-meta{font-size:9px;line-height:1.6}.coverflow-meta>span{min-width:0}
+  .coverflow-caption p{font-size:13px;line-height:1.5;min-height:40px}
+  .coverflow-caption .button{min-height:44px;font-size:12px}
+  .coverflow-stage{height:calc(var(--card-width)*.56285 + 295px)}
+  .coverflow-bottom{font-size:10px;gap:12px}
+  .quotes{min-height:0}.quotes blockquote{font-size:clamp(21px,6vw,26px)}
+  .quote-controls{margin-top:30px}
+  .growth-signal{gap:10px}.growth-signal span{font-size:clamp(7px,2vw,10px)}
+  .circle-layer h2{font-size:clamp(42px,12.5vw,64px)}
+  .location h2,.intro h2{font-size:clamp(31px,9vw,42px)}
+  .section-label{gap:18px;line-height:1.7}
+  .design-copy{padding-inline:22px}
+  .concept-nav{gap:15px}.concept-foot{gap:12px;font-size:8px}
+}
+@media(max-width:360px){
+  .hero-intro p{font-size:28px}.hero-bottom{gap:8px}
+  .round-link{font-size:8px;gap:6px}.round-arrow{width:30px;height:30px}
+  .hero-bottom .button{font-size:11px;padding-inline:13px}
+  .hero-bottom .glass-content{gap:12px}
+  .service h2{font-size:50px}.service-heading{gap:15px}
+  .design-copy h3{font-size:31px}.concept{padding:17px}
+  .modern strong{font-size:38px}.old strong{font-size:30px}
+  .coverflow{--card-width:86vw}.coverflow-caption h3{font-size:25px}
+  .coverflow-controls{gap:8px}.coverflow-meta{font-size:8px}
+  .footer-links .button{padding-inline:17px}.footer-links .glass-content{gap:15px}
+}
+@media(hover:none){.liquid-glass:hover{transform:none}.magnetic{transform:none!important}}
+@media(prefers-reduced-motion:reduce){footer.cinematic-footer{transform:none!important;will-change:auto}.footer-curtain{clip-path:none}}

@@ -13,7 +13,7 @@
   const track=document.querySelector('.circle-track'),sticky=document.querySelector('.circle-sticky');
   const ball=document.querySelector('.circle-ball'),light=document.querySelector('.circle-light');
   const curtain=document.querySelector('.footer-curtain'),giant=document.querySelector('.footer-giant');
-  const center=document.querySelector('.footer-center');
+  const center=document.querySelector('.footer-center'),footer=document.querySelector('.cinematic-footer');
   const clamp=n=>Math.min(1,Math.max(0,n));
   let frame=0;
   function render(){
@@ -28,7 +28,11 @@
       ball.style.transform=`translate(-50%,calc(-50% + ${offset}px))`;
       light.style.clipPath=`circle(${diameter/2}px at ${w/2}px ${h/2+offset}px)`;
     }else{ball.removeAttribute('style');light.removeAttribute('style')}
-    const progress=clamp((innerHeight-curtain.getBoundingClientRect().top)/(innerHeight*.85));
+    const footerTop=curtain.getBoundingClientRect().top;
+    // A clipped, translated surface recreates the curtain on touch browsers
+    // without relying on fixed-position descendants. Tall content stays scrollable.
+    footer.style.transform=reduce.matches?'none':`translate3d(0,${-Math.max(0,Math.min(innerHeight,footerTop))}px,0)`;
+    const progress=clamp((innerHeight-footerTop)/(innerHeight*.85));
     giant.style.transform=reduce.matches?'none':`translateY(${(1-progress)*70}px) scale(${.88+progress*.12})`;
     center.style.transform=reduce.matches?'none':`translateY(${(1-progress)*40}px)`;
     // Content stays readable before/without animation; scroll adds depth only.
