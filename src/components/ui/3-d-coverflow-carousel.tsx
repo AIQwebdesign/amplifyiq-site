@@ -26,7 +26,7 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
   },[]);
   useEffect(()=>{
     if(paused||hovered||focused||!visible||hidden||reduce||total<2)return;
-    const interval=setInterval(()=>move(1),6500);return()=>clearInterval(interval);
+    const interval=setInterval(()=>move(1),3000);return()=>clearInterval(interval);
   },[paused,hovered,focused,visible,hidden,reduce,total,move]);
   useEffect(()=>{const count=document.getElementById('work-count');if(count)count.textContent=String(current+1).padStart(2,'0')},[current]);
   const select=(index:number)=>{setPaused(true);setCurrent(index)};
@@ -64,7 +64,7 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
       <button className="coverflow-arrow liquid-glass" onClick={()=>navigate(1)} aria-label="Next website">→</button>
     </div>
     <div className="coverflow-bottom mono"><span aria-live={paused||focused?'polite':'off'}>{String(current+1).padStart(2,'0')} / {String(total).padStart(2,'0')} — {items[current].title}</span>
-      {!reduce&&<button onClick={()=>setPaused(value=>!value)} aria-label={paused?'Play project slideshow':'Pause project slideshow'}>{paused?'Play slideshow ▷':'Pause slideshow Ⅱ'}</button>}
+      {!reduce&&<button onClick={()=>setPaused(value=>!value)} aria-label={paused?'Play project slideshow':'Pause project slideshow'}><span aria-hidden="true">{paused?'▷':'Ⅱ'}</span></button>}
     </div>
   </div>;
 }
