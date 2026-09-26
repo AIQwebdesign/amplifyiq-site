@@ -32,3 +32,7 @@ Keyboard navigation is scoped to the carousel; inactive slides are inert. Autopl
 ## Mobile Circle Menu
 
 src/components/ui/circle-menu.tsx adapts the supplied CircleMenu prompt (reference-components/supplied-circle-menu.md), retaining radial positions, staggered spring expansion, rotating collapse and a pulsing close trigger. Uses Framer Motion and Lucide icons. Adapted to AmplifyIQ's six section anchors and ice-blue glass palette. A native modal dialog adds focus containment, Escape dismissal and scroll locking; links have persistent touch labels, no nested buttons, and reduced-motion support. Desktop navigation is unchanged. Existing CSS is used instead of a Tailwind/Shadcn migration; React UI components remain under src/components/ui.
+
+## Unique testimonials
+
+src/components/ui/unique-testimonial.tsx adapts the supplied Unique Testimonial component (reference-components/supplied-unique-testimonial.md): centered quote, blur/fade transitions, role caption and expanding author pills. The four existing quotes and attributions are read from semantic HTML without edits. Initials replace demo portraits so no unrelated people are represented as customers. Adds pressed-state labels, keyboard focus expansion, cancellable transition timers and reduced-motion support. Existing React/TypeScript and CSS architecture is retained; no additional dependencies or Tailwind/Shadcn migration are needed.

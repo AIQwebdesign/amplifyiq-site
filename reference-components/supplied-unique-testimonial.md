@@ -1,0 +1,185 @@
+You are given a task to integrate an existing React component in the codebase
+
+The codebase should support:
+- shadcn project structure  
+- Tailwind CSS
+- Typescript
+
+If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
+
+Determine the default path for components and styles. 
+If default path for components is not /components/ui, provide instructions on why it's important to create this folder
+Copy-paste this component to /components/ui folder:
+```tsx
+unique-testimonial.tsx
+"use client"
+
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+
+const testimonials = [
+  {
+    id: 1,
+    quote: "This changed everything for me.",
+    author: "Sarah Chen",
+    role: "Designer at Figma",
+    avatar: "https://cdn.21st.dev/assets/mirror/25/258fa1eaa808daeccc296b32b3c1702847ed746acebf2af3b782803da9033760.jpg",
+  },
+  {
+    id: 2,
+    quote: "Simply brilliant. Nothing else compares.",
+    author: "Marcus Johnson",
+    role: "Engineer at Vercel",
+    avatar: "https://cdn.21st.dev/assets/mirror/2f/2f49a8d154e226bfa844815ad89a992f731771b9c05af2fae605e4fd863390d5.jpg",
+  },
+  {
+    id: 3,
+    quote: "The attention to detail is unmatched.",
+    author: "Elena Rodriguez",
+    role: "Founder at Craft",
+    avatar: "https://cdn.21st.dev/assets/mirror/86/8669748873c9f35b649cf4a3f5307c412a13fb0f15b9c45d182a3d7208b531ae.jpg",
+  },
+]
+
+export function Testimonials() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [displayedQuote, setDisplayedQuote] = useState(testimonials[0].quote)
+  const [displayedRole, setDisplayedRole] = useState(testimonials[0].role)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+
+  const handleSelect = (index: number) => {
+    if (index === activeIndex || isAnimating) return
+    setIsAnimating(true)
+
+    setTimeout(() => {
+      setDisplayedQuote(testimonials[index].quote)
+      setDisplayedRole(testimonials[index].role)
+      setActiveIndex(index)
+      setTimeout(() => setIsAnimating(false), 400)
+    }, 200)
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-10 py-16">
+      {/* Quote Container */}
+      <div className="relative px-8">
+        <span className="absolute -left-2 -top-6 text-7xl font-serif text-foreground/[0.06] select-none pointer-events-none">
+          "
+        </span>
+
+        <p
+          className={cn(
+            "text-2xl md:text-3xl font-light text-foreground text-center max-w-lg leading-relaxed transition-all duration-400 ease-out",
+            isAnimating ? "opacity-0 blur-sm scale-[0.98]" : "opacity-100 blur-0 scale-100",
+          )}
+        >
+          {displayedQuote}
+        </p>
+
+        <span className="absolute -right-2 -bottom-8 text-7xl font-serif text-foreground/[0.06] select-none pointer-events-none">
+          "
+        </span>
+      </div>
+
+      <div className="flex flex-col items-center gap-6 mt-2">
+        {/* Role text */}
+        <p
+          className={cn(
+            "text-xs text-muted-foreground tracking-[0.2em] uppercase transition-all duration-500 ease-out",
+            isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0",
+          )}
+        >
+          {displayedRole}
+        </p>
+
+        <div className="flex items-center justify-center gap-2">
+          {testimonials.map((testimonial, index) => {
+            const isActive = activeIndex === index
+            const isHovered = hoveredIndex === index && !isActive
+            const showName = isActive || isHovered
+
+            return (
+              <button
+                key={testimonial.id}
+                onClick={() => handleSelect(index)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={cn(
+                  "relative flex items-center gap-0 rounded-full cursor-pointer",
+                  "transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                  isActive ? "bg-foreground shadow-lg" : "bg-transparent hover:bg-muted/80",
+                  showName ? "pr-4 pl-2 py-2" : "p-0.5",
+                )}
+              >
+                {/* Avatar with smooth ring animation */}
+                <div className="relative flex-shrink-0">
+                  <img
+                    src={testimonial.avatar || "/placeholder.svg"}
+                    alt={testimonial.author}
+                    className={cn(
+                      "w-8 h-8 rounded-full object-cover",
+                      "transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                      isActive ? "ring-2 ring-background/30" : "ring-0",
+                      !isActive && "hover:scale-105",
+                    )}
+                  />
+                </div>
+
+                <div
+                  className={cn(
+                    "grid transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                    showName ? "grid-cols-[1fr] opacity-100 ml-2" : "grid-cols-[0fr] opacity-0 ml-0",
+                  )}
+                >
+                  <div className="overflow-hidden">
+                    <span
+                      className={cn(
+                        "text-sm font-medium whitespace-nowrap block",
+                        "transition-colors duration-300",
+                        isActive ? "text-background" : "text-foreground",
+                      )}
+                    >
+                      {testimonial.author}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+demo.tsx
+import { Testimonials } from "@/components/ui/unique-testimonial"
+
+export default function Home() {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-background p-8">
+      <Testimonials />
+    </main>
+  )
+}
+
+```
+
+Implementation Guidelines
+ 1. Analyze the component structure and identify all required dependencies
+ 2. Review the component's argumens and state
+ 3. Identify any required context providers or hooks and install them
+ 4. Questions to Ask
+ - What data/props will be passed to this component?
+ - Are there any specific state management requirements?
+ - Are there any required assets (images, icons, etc.)?
+ - What is the expected responsive behavior?
+ - What is the best place to use this component in the app?
+
+Steps to integrate
+ 0. Copy paste all the code above in the correct directories
+ 1. Install external dependencies
+ 2. Fill image assets with Unsplash stock images you know exist
+ 3. Use lucide-react icons for svgs or logos if component requires them
