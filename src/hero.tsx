@@ -14,7 +14,8 @@ function Robot() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-    const resize = () => app.current?.setZoom(innerWidth < 650 ? .68 : 1);
+    let lastZoom = 0;
+    const resize = () => { const zoom = innerWidth <= 650 ? .82 : 1; if (app.current && zoom !== lastZoom) { app.current.setZoom(zoom); lastZoom = zoom; } };
     resize();
     let visible = true;
     const sync = () => { if (app.current) { if (document.hidden || !visible || reduce.matches) app.current.stop(); else app.current.play(); } };
