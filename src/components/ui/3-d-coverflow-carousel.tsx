@@ -1,3 +1,4 @@
+import MotionButton from './motion-button';
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 
 export interface CarouselItem { title: string; tag: string; location: string; desc: string; img: string; alt: string; url: string; }
@@ -53,7 +54,7 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
           </a>
           <div className="coverflow-info"><div className="coverflow-meta mono"><span>{item.tag}</span><span>{item.location}</span></div>
             <div className="coverflow-caption"><div><h3>{item.title}</h3><p>{item.desc}</p></div>
-              <a className="button liquid-glass" href={item.url} target="_blank" rel="noopener" aria-label={`View ${item.title} website`}><span className="glass-refraction" aria-hidden="true"/><span className="glass-content">View website <span>↗</span></span></a>
+              <MotionButton label="View website" href={item.url} target="_blank" rel="noopener" aria-label={`View ${item.title} website`}/>
             </div>
           </div>
         </article>;

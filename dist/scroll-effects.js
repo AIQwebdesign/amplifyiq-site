@@ -2,14 +2,7 @@
 // and CinematicFooter. Native page scroll avoids a nested scroll container.
 (() => {
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-  const buttons=document.querySelectorAll('.button,.header-cta,.hero-work-link,.text-link,.project-open,.project-bottom>a,.footer-socials>a,.back-top');
-  buttons.forEach(button=>{
-    button.classList.add('liquid-glass');
-    const content=document.createElement('span');content.className='glass-content';
-    while(button.firstChild)content.append(button.firstChild);
-    const refraction=document.createElement('span');refraction.className='glass-refraction';refraction.setAttribute('aria-hidden','true');
-    button.append(refraction,content);
-  });
+  const mobile=matchMedia('(max-width:650px)');
   const track=document.querySelector('.circle-track'),sticky=document.querySelector('.circle-sticky');
   const ball=document.querySelector('.circle-ball'),light=document.querySelector('.circle-light');
   const curtain=document.querySelector('.footer-curtain'),giant=document.querySelector('.footer-giant');
@@ -18,7 +11,9 @@
   let frame=0;
   function render(){
     frame=0;
-    const rect=track.getBoundingClientRect(),h=sticky.clientHeight,w=sticky.clientWidth;
+    const rect=track.getBoundingClientRect();
+    if(rect.bottom>0 && rect.top<innerHeight){
+    const h=sticky.clientHeight,w=sticky.clientWidth;
     const elapsed=Math.max(0,-rect.top),p1=clamp(elapsed/h),p2=clamp((elapsed-h)/h);
     const eased=p1<.5?8*p1**4:1-(-2*p1+2)**4/2;
     const base=Math.min(380,w*.65),offset=(1-eased)*(h/2+base/2);
@@ -28,6 +23,8 @@
       ball.style.transform=`translate(-50%,calc(-50% + ${offset}px))`;
       light.style.clipPath=`circle(${diameter/2}px at ${w/2}px ${h/2+offset}px)`;
     }else{ball.removeAttribute('style');light.removeAttribute('style')}
+    }
+    if(mobile.matches){footer.style.transform='';giant.style.transform='';center.style.transform='';center.style.opacity='';return}
     const footerTop=curtain.getBoundingClientRect().top;
     // A clipped, translated surface recreates the curtain on touch browsers
     // without relying on fixed-position descendants. Tall content stays scrollable.

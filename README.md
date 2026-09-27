@@ -1,6 +1,6 @@
 # AmplifyIQ redesign
 
-An accessible website with an ice-blue cloud atmosphere, an interactive Spline robot, liquid-glass calls to action, a circular scroll reveal and a cinematic footer.
+An accessible website with an ice-blue cloud atmosphere, an interactive Spline robot, expanding-circle calls to action, a circular scroll reveal and a cinematic footer.
 
 ## Run locally
 
@@ -25,7 +25,7 @@ The FORM STUDIO comparison is explicitly labelled as a conceptual demonstration 
 - `dist/assets`: preserved public brand and project assets plus the generated cloud background (the previous sculpture is retained but unused).
 - `THIRD-PARTY.md`: component provenance and generated-image prompt. Retrieved component source is retained in `reference-components`.
 
-Animation uses scheduled scroll updates and an orb rendering loop capped at 1.5 device pixel ratio and approximately 30fps. The orb and robot stop offscreen, when hidden and with reduced motion. The hero background uses a 12-second CSS cloud drift on desktop and mobile. The visible pause button was removed as requested. Reduced motion disables ambient animation and switches the portfolio and circle to ordinary/static layouts. Phones use the same swipeable coverflow and clipped curtain footer reveal as desktop. Short screens can scroll through the entire footer. Contact actions open email or WhatsApp; there is no backend form or first-party analytics tracker. The robot scene requires network access to the supplied Spline URL; static text and the cloud hero remain if its loading fails.
+Animation uses scheduled scroll updates and an orb rendering loop capped at 1.5 device pixel ratio and approximately 30fps. The orb and robot stop offscreen, when hidden and with reduced motion. The hero background uses a 12-second CSS cloud drift on desktop and mobile. The visible pause button was removed as requested. Reduced motion disables ambient animation and switches the portfolio and circle to ordinary/static layouts. Phones use the same swipeable coverflow and a native sticky curtain footer reveal, avoiding scroll-driven transforms and expensive blur. Short screens can scroll through the entire footer. Contact actions open email or WhatsApp; there is no backend form or first-party analytics tracker. The robot scene requires network access to the supplied Spline URL; static text and the cloud hero remain if its loading fails.
 
 ## Validation
 
