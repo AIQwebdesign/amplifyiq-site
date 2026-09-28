@@ -28,3 +28,10 @@ body:has(.expansion-hero) .circle-menu-toggle{color:#e9f7ff;background:#14365066
  .expansion-caption{font-size:8px;gap:16px}.expansion-caption>span{max-width:135px}.expansion-caption a{text-align:right}
 }
 @media(prefers-reduced-motion:reduce){.expansion-hero{height:100svh;min-height:620px}.expansion-stage{position:relative}.expansion-title>span{transform:none!important;opacity:1!important}.expansion-media{will-change:auto}}
+
+/* Keep the first frame outside React so mounting/decoding never clears it. */
+.expansion-media{background:transparent}
+.expansion-player{position:absolute;inset:0}
+.expansion-player video{opacity:0;transition:opacity .18s ease}
+.expansion-player video.is-ready{opacity:1}
+@media(prefers-reduced-motion:reduce){.expansion-player video{transition:none}}

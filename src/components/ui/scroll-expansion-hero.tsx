@@ -1,8 +1,33 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Supplied ScrollExpandMedia adapted to native page scrolling.
 export default function ScrollExpandMedia() {
   const video = useRef<HTMLVideoElement>(null);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const player = video.current!;
+    let frameCallback: number | undefined;
+    let firstPaint = 0, secondPaint = 0;
+    const reveal = () => {
+      if (frameCallback !== undefined) return;
+      if (typeof player.requestVideoFrameCallback === 'function') {
+        frameCallback = player.requestVideoFrameCallback(() => setReady(true));
+      } else {
+        firstPaint = requestAnimationFrame(() => {
+          secondPaint = requestAnimationFrame(() => {
+            if (player.readyState >= 2) setReady(true);
+          });
+        });
+      }
+    };
+    player.addEventListener('playing', reveal);
+    if (!player.paused && player.readyState >= 2) reveal();
+    return () => {
+      player.removeEventListener('playing', reveal);
+      if (frameCallback !== undefined) player.cancelVideoFrameCallback(frameCallback);
+      cancelAnimationFrame(firstPaint); cancelAnimationFrame(secondPaint);
+    };
+  }, []);
   useEffect(() => {
     const track = document.querySelector<HTMLElement>('.expansion-hero')!;
     const stage = track.querySelector<HTMLElement>('.expansion-stage')!;
@@ -29,9 +54,10 @@ export default function ScrollExpandMedia() {
     render(); syncPlayback();
     return () => { cancelAnimationFrame(frame); observer.disconnect(); resize.disconnect(); window.removeEventListener('scroll', schedule); document.removeEventListener('visibilitychange', syncPlayback); reduced.removeEventListener('change', change); };
   }, []);
-  return <video ref={video} className="expansion-video" autoPlay muted loop playsInline preload="auto" poster="assets/hero-world.webp" aria-hidden="true" disablePictureInPicture>
+  return <video ref={video} className={`expansion-video${ready ? ' is-ready' : ''}`} autoPlay muted loop playsInline preload="auto" poster="assets/hero-first-frame.webp" aria-hidden="true" disablePictureInPicture onError={() => setReady(false)}>
 
     <source src="assets/hero-hq-loop.mp4" type="video/mp4"/>
   </video>;
 }
+
 
