@@ -30,7 +30,8 @@ export default function ScrollExpandMedia() {
     return () => { cancelAnimationFrame(frame); observer.disconnect(); resize.disconnect(); window.removeEventListener('scroll', schedule); document.removeEventListener('visibilitychange', syncPlayback); reduced.removeEventListener('change', change); };
   }, []);
   return <video ref={video} className="expansion-video" autoPlay muted loop playsInline preload="auto" poster="assets/hero-world.webp" aria-hidden="true" disablePictureInPicture>
-    <source src="assets/hero-pingpong-mobile.mp4" type="video/mp4" media="(max-width: 650px)"/>
-    <source src="assets/hero-pingpong.mp4" type="video/mp4"/>
+
+    <source src="assets/hero-hq-loop.mp4" type="video/mp4"/>
   </video>;
 }
+

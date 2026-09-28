@@ -67,7 +67,6 @@ export function CoverFlowCarousel({items}: {items: CarouselItem[]}) {
       <button className="coverflow-arrow liquid-glass" onClick={()=>navigate(1)} aria-label="Next website">→</button>
     </div>
     <div className="coverflow-bottom mono"><span aria-live={paused||focused?'polite':'off'}>{String(current+1).padStart(2,'0')} / {String(total).padStart(2,'0')} — {items[current].title}</span>
-      {!reduce&&<button onClick={()=>{setFocused(false);setPaused(value=>!value)}} aria-label={paused?'Play project slideshow':'Pause project slideshow'}><span aria-hidden="true">{paused?'▷':'Ⅱ'}</span></button>}
     </div>
   </div>;
 }

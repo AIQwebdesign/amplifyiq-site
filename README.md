@@ -34,3 +34,5 @@ TypeScript, JavaScript syntax and the production bundle are checked. Latest brow
 Responsive update: checked all sections at 320px and 390px phone widths, 768px tablet and 1440px desktop. Verified footer curtain geometry, reachable footer links, menu, comparison keyboard input, carousel controls and testimonials. These are desktop browser viewport checks, not physical iOS/Android device tests.
 
 Hero update: user-supplied fantasy landscape image and native-scroll expanding video. hero-pingpong.mp4 contains 0-5 seconds forward followed by 5-0 seconds in reverse; the complete 10-second file loops. Mobile uses hero-pingpong-mobile.mp4. Styles: dist/expansion-hero.css; React: src/components/ui/scroll-expansion-hero.tsx. Local preview server supports MP4 byte ranges.
+
+High-quality hero: hero-hq-loop.mp4 replaces the earlier desktop/mobile renditions. Both device sizes now use the supplied finalvid.mp4 at 2560x1440, 60fps, encoded as a silent 10-second forward/reverse loop. Service heading decorative arrows and the project slideshow play/pause icon were removed; carousel navigation and pause-on-interaction remain.
