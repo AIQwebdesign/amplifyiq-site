@@ -3,7 +3,8 @@ import { CoverFlowCarousel, type CarouselItem } from './components/ui/3-d-coverf
 
 const track=document.querySelector<HTMLElement>('.work-track');
 if(track){
-  const items:CarouselItem[]=[...track.querySelectorAll('.project')].map(card=>({
+  const items:CarouselItem[]=[...track.querySelectorAll('.project')].map((card,index)=>({
+    preview:['assets/preview-quay.webp','assets/preview-et.webp','assets/preview-kiko.webp','assets/preview-richie.webp','assets/preview-wonder.webp'][index],
     title:card.querySelector('h3')!.textContent!,
     tag:card.querySelector('.project-meta span')!.textContent!,
     location:card.querySelector('.project-meta span:last-child')!.textContent!,

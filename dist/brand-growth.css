@@ -23,3 +23,11 @@
 @media(max-width:650px){.client-strip{padding:10px 0}.client-logo-group{gap:26px;padding-right:26px}.client-logo-group>a,.client-logo-group>span{flex-basis:180px;width:180px}.client-marquee-track{animation-duration:28s}.grow .service-heading h2{font-size:clamp(44px,12vw,70px)}.grow .service-heading{align-items:flex-start;gap:18px}.grow .service-heading>.mono{padding-top:10px}}
 @media(prefers-reduced-motion:reduce){.client-marquee-track{animation:none;width:100%}.client-logo-group{width:100%;flex-wrap:wrap;justify-content:center;padding:0 6%;gap:12px}.client-logo-group>a{flex:1 1 150px}.client-logo-group[aria-hidden=true]{display:none}}
 .client-logo-group{min-width:100vw;justify-content:space-around}
+
+.project-scroll-preview{position:relative}
+.coverflow-image.project-scroll-preview img{width:100%;height:auto;max-width:none;object-fit:initial;transform:translateY(0);transition:transform 1s ease-out}
+@media(hover:hover){.project-scroll-preview:hover img{transform:translateY(calc(-100% + var(--preview-window, 400px)));transition-duration:8s;transition-timing-function:linear}}
+.project-scroll-preview:focus-visible img,.project-scroll-preview.is-previewing img{transform:translateY(calc(-100% + var(--preview-window, 400px)));transition-duration:8s;transition-timing-function:linear}
+.project-preview-toggle{display:block;margin:10px 18px 0;padding:8px 12px;color:#b9d8e8;background:#102b3a;border:1px solid #9edaf333;border-radius:20px;font-size:11px;cursor:pointer;min-height:36px}
+@media(hover:hover){.project-preview-toggle{display:none}}
+@media(prefers-reduced-motion:reduce){.coverflow-image.project-scroll-preview img{transition:none;transform:none}.project-scroll-preview.is-previewing{overflow-y:auto}}
