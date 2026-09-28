@@ -46,3 +46,6 @@ Hero alignment update: removed studio badge and changed intro to Design is Every
 
 ## Scroll-expansion video hero
 The supplied ScrollExpandMedia prompt is archived in reference-components/supplied-scroll-expansion.md and adapted in src/components/ui/scroll-expansion-hero.tsx. Native page scrolling expands a clipped video while the title separates. The user supplied both hero background and video. The first five seconds were encoded forward and backward into a silent ten-second H.264 loop, with a 960px mobile rendition. Reduced-motion, hidden-tab and offscreen playback handling are included. The former Spline hero is no longer mounted.
+
+## Glyph Portal process section
+Adapted the user-supplied Glyph Portal by Christian Katzmann (MIT, 2026); copyright and origin notice are retained in src/components/ui/glyph-portal.tsx. The full supplied prompt is archived in reference-components/supplied-glyph-portal.md. Native page scroll drives the same SVG glyph camera on desktop and mobile with stable small-viewport sizing. The PROCESS instance uses the existing six stage descriptions and a blue landscape backdrop. Reduced-motion and no-JavaScript reading layouts remain available. No new dependencies were required; the existing React/TypeScript components/ui structure and CSS are retained.

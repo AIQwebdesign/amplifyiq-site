@@ -11,9 +11,7 @@ $('#comparison').addEventListener('input',e=>$('.comparison').style.setProperty(
 let quote=0;const quotes=$$('.quotes figure');
 function showQuote(n){quote=(n+quotes.length)%quotes.length;quotes.forEach((q,i)=>q.hidden=i!==quote);$('#quote-count').textContent=String(quote+1).padStart(2,'0')+' / 04'}
 $('#quote-prev').addEventListener('click',()=>showQuote(quote-1));$('#quote-next').addEventListener('click',()=>showQuote(quote+1));
-const stages=$$('.stages li');
-const stageObserver=new IntersectionObserver(entries=>entries.forEach(e=>{e.target.classList.toggle('active',e.isIntersecting);if(e.isIntersecting)$('#stage-number').textContent=String(stages.indexOf(e.target)+1).padStart(2,'0')}),{rootMargin:'-20% 0px -30% 0px',threshold:0});
-stages.forEach(el=>stageObserver.observe(el));
+
 let scrollPending=false;
 function renderScroll(){scrollPending=false;const max=document.documentElement.scrollHeight-innerHeight;$('.page-progress').style.transform=`scaleX(${max>0?scrollY/max:0})`;$('header').classList.toggle('is-scrolled',scrollY>90);
 const signalRect=$('.growth-signal').getBoundingClientRect();const p=Math.max(0,Math.min(1,(innerHeight-signalRect.top)/(innerHeight*.7)));$$('.growth-signal i').forEach((bar,i)=>bar.style.transform=motion.matches?'':`scaleY(${.2+.8*Math.min(1,p*(1.5-i*.15))})`);
