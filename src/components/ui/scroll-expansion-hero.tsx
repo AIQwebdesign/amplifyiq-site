@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+declare const __HERO_VIDEO_VERSION__: string;
+
 gsap.registerPlugin(ScrollTrigger);
 
 /** A paused video and editorial story share one smoothly scrubbed playhead. */
@@ -16,20 +18,43 @@ export default function ScrollExpandMedia() {
     const words = [...hero.querySelectorAll<HTMLElement>('.story-word')];
     const cta = hero.querySelector<HTMLAnchorElement>('.story-final a')!;
     const playhead = { progress: 0 };
-    let reduced = false, disposed = false, revealFrame = 0, activeBeat = -1;
-    // Coalesce seeks while decoding. GSAP interpolates the target; seeked
-    // catches up to the latest position without building a stale seek queue.
-    const seek = () => {
-      if (disposed || reduced || document.hidden || !Number.isFinite(player.duration) || player.seeking) return;
-      const target = playhead.progress * Math.max(0, player.duration - 1 / 30);
-      if (Math.abs(player.currentTime - target) > 1 / 60) player.currentTime = target;
+    let reduced = false, disposed = false, frame = 0, activeBeat = -1;
+    let metadataReady = false, duration = 0, lastTick = 0, revealed = false;
+    let interpolatedTime = 0;
+    const scheduleSeek = () => {
+      if (!frame && !disposed && !reduced && !document.hidden) frame = requestAnimationFrame(tick);
     };
-    const reveal = () => {
-      cancelAnimationFrame(revealFrame);
-      revealFrame = requestAnimationFrame(() => {
-        if (!disposed && !reduced && player.readyState >= 2) setReady(true);
-      });
-      seek();
+    // Decode at most one seek at a time. GSAP smooths the scroll playhead and
+    // this time-based interpolation smooths the actual video seek requests.
+    const tick = (now: number) => {
+      frame = 0;
+      if (disposed || reduced || document.hidden || !metadataReady || player.seeking || player.readyState < 2) return;
+      const target = Math.max(0, Math.min(1, playhead.progress)) * duration;
+      const dt = Math.min(64, lastTick ? now - lastTick : 16.67);
+      lastTick = now;
+      interpolatedTime += (target - interpolatedTime) * (1 - Math.exp(-dt / 65));
+      if (Math.abs(target - interpolatedTime) < 1 / 120) interpolatedTime = target;
+      if (Math.abs(player.currentTime - interpolatedTime) > 1 / 120) {
+        player.currentTime = interpolatedTime;
+        // seeked resumes the loop; no recursive seek inside that event.
+      } else if (Math.abs(target - interpolatedTime) > 1 / 120) scheduleSeek();
+    };
+    const decoded = () => {
+      // Reveal this decoded frame BEFORE scheduling another seek. Waiting for
+      // an animation frame after starting a seek can see HAVE_METADATA again
+      // and leave the static poster covering a correctly moving video.
+      if (!disposed && !reduced && player.readyState >= 2 && !revealed) {
+        revealed = true;
+        setReady(true);
+      }
+      scheduleSeek();
+    };
+    const metadata = () => {
+      duration = player.duration;
+      metadataReady = Number.isFinite(duration) && duration > 0;
+      interpolatedTime = player.currentTime;
+      lastTick = 0;
+      scheduleSeek();
     };
     const update = () => {
       const p = playhead.progress;
@@ -40,14 +65,16 @@ export default function ScrollExpandMedia() {
         beats.forEach((beat, index) => beat.setAttribute('aria-hidden', String(index !== next)));
         cta.tabIndex = next === 4 ? 0 : -1;
       }
-      seek();
+      scheduleSeek();
     };
     player.pause();
-    player.addEventListener('loadedmetadata', seek);
-    player.addEventListener('loadeddata', reveal);
-    player.addEventListener('seeked', reveal);
-    document.addEventListener('visibilitychange', seek);
-    if (player.readyState >= 2) reveal();
+    player.addEventListener('loadedmetadata', metadata);
+    player.addEventListener('loadeddata', decoded);
+    player.addEventListener('canplay', decoded);
+    player.addEventListener('seeked', decoded);
+    document.addEventListener('visibilitychange', scheduleSeek);
+    if (player.readyState >= 1) metadata();
+    if (player.readyState >= 2) decoded();
     const media = gsap.matchMedia();
     media.add({ mobile: '(max-width: 767px)', reduce: '(prefers-reduced-motion: reduce)', desktop: '(min-width: 768px)' }, context => {
       reduced = !!context.conditions?.reduce;
@@ -56,7 +83,8 @@ export default function ScrollExpandMedia() {
       gsap.set(beats, { autoAlpha: 0, y: 0, scale: 1 });
       gsap.set(words, { autoAlpha: 0, y: mobile ? 10 : 24, scale: mobile ? 1 : .96 });
       if (reduced) {
-        setReady(false); player.pause();
+        revealed = false; setReady(false); player.pause();
+        cancelAnimationFrame(frame); frame = 0;
         gsap.set(beats[4], { autoAlpha: 1 });
         playhead.progress = 1; update();
         return;
@@ -86,21 +114,22 @@ export default function ScrollExpandMedia() {
       timeline.to(beats[3], { autoAlpha: 0, y: -shift, duration: .035 }, .845);
       timeline.fromTo(beats[4], { y: shift, scale: mobile ? 1 : .985 }, { autoAlpha: 1, y: 0, scale: 1, duration: .05 }, .88);
       update();
-      if (player.readyState >= 2) reveal();
+      if (player.readyState >= 2) decoded();
       return () => { timeline.scrollTrigger?.kill(); timeline.kill(); };
     });
     document.fonts.ready.then(() => { if (!disposed) ScrollTrigger.refresh(); });
     return () => {
-      disposed = true; media.revert(); cancelAnimationFrame(revealFrame);
-      player.removeEventListener('loadedmetadata', seek);
-      player.removeEventListener('loadeddata', reveal);
-      player.removeEventListener('seeked', reveal);
-      document.removeEventListener('visibilitychange', seek);
+      disposed = true; media.revert(); cancelAnimationFrame(frame);
+      player.removeEventListener('loadedmetadata', metadata);
+      player.removeEventListener('loadeddata', decoded);
+      player.removeEventListener('canplay', decoded);
+      player.removeEventListener('seeked', decoded);
+      document.removeEventListener('visibilitychange', scheduleSeek);
       player.pause(); stage.style.removeProperty('--story-progress');
       beats.forEach(beat => beat.removeAttribute('aria-hidden')); cta.removeAttribute('tabindex');
     };
   }, []);
   return <video ref={video} className={`expansion-video${ready ? ' is-ready' : ''}`} muted playsInline preload="auto" poster="assets/hero/amplify-first.webp" aria-hidden="true" disablePictureInPicture onError={() => setReady(false)}>
-    <source src="assets/hero/amplify-scroll.mp4" type="video/mp4" />
+    <source src={`assets/hero/amplify-scroll.mp4?v=${__HERO_VIDEO_VERSION__}`} type="video/mp4" />
   </video>;
 }
