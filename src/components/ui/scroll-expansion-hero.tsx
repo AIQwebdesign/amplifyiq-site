@@ -21,6 +21,8 @@ export default function ScrollExpandMedia() {
     let reduced = false, disposed = false, frame = 0, activeBeat = -1;
     let metadataReady = false, duration = 0, lastTick = 0, revealed = false;
     let interpolatedTime = 0;
+    const download = new AbortController();
+    let objectUrl: string | undefined;
     const scheduleSeek = () => {
       if (!frame && !disposed && !reduced && !document.hidden) frame = requestAnimationFrame(tick);
     };
@@ -40,6 +42,7 @@ export default function ScrollExpandMedia() {
       } else if (Math.abs(target - interpolatedTime) > 1 / 120) scheduleSeek();
     };
     const decoded = () => {
+      player.dataset.seekableRanges = String(player.seekable.length);
       // Reveal this decoded frame BEFORE scheduling another seek. Waiting for
       // an animation frame after starting a seek can see HAVE_METADATA again
       // and leave the static poster covering a correctly moving video.
@@ -75,6 +78,27 @@ export default function ScrollExpandMedia() {
     document.addEventListener('visibilitychange', scheduleSeek);
     if (player.readyState >= 1) metadata();
     if (player.readyState >= 2) decoded();
+    // A complete local Blob gives the decoder a seekable source even when a
+    // production proxy/CDN does not expose usable HTTP byte-range responses.
+    // The existing first-frame poster stays visible throughout the download.
+    const videoUrl = `assets/hero/amplify-scroll.mp4?v=${__HERO_VIDEO_VERSION__}`;
+    fetch(videoUrl, { signal: download.signal, credentials: 'same-origin' })
+      .then(response => {
+        if (!response.ok) throw new Error(`Hero video HTTP ${response.status}`);
+        return response.blob();
+      })
+      .then(blob => {
+        if (disposed) return;
+        objectUrl = URL.createObjectURL(new Blob([blob], { type: 'video/mp4' }));
+        player.src = objectUrl;
+        player.load();
+      })
+      .catch(error => {
+        if (disposed || error.name === 'AbortError') return;
+        // Retain a direct-source fallback if downloading a Blob is disallowed.
+        player.src = videoUrl;
+        player.load();
+      });
     const media = gsap.matchMedia();
     media.add({ mobile: '(max-width: 767px)', reduce: '(prefers-reduced-motion: reduce)', desktop: '(min-width: 768px)' }, context => {
       reduced = !!context.conditions?.reduce;
@@ -120,16 +144,18 @@ export default function ScrollExpandMedia() {
     document.fonts.ready.then(() => { if (!disposed) ScrollTrigger.refresh(); });
     return () => {
       disposed = true; media.revert(); cancelAnimationFrame(frame);
+      download.abort();
       player.removeEventListener('loadedmetadata', metadata);
       player.removeEventListener('loadeddata', decoded);
       player.removeEventListener('canplay', decoded);
       player.removeEventListener('seeked', decoded);
       document.removeEventListener('visibilitychange', scheduleSeek);
       player.pause(); stage.style.removeProperty('--story-progress');
+      player.removeAttribute('src'); player.load();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
       beats.forEach(beat => beat.removeAttribute('aria-hidden')); cta.removeAttribute('tabindex');
     };
   }, []);
-  return <video ref={video} className={`expansion-video${ready ? ' is-ready' : ''}`} muted playsInline preload="auto" poster="assets/hero/amplify-first.webp" aria-hidden="true" disablePictureInPicture onError={() => setReady(false)}>
-    <source src={`assets/hero/amplify-scroll.mp4?v=${__HERO_VIDEO_VERSION__}`} type="video/mp4" />
+  return <video ref={video} data-video-source={`assets/hero/amplify-scroll.mp4?v=${__HERO_VIDEO_VERSION__}`} className={`expansion-video${ready ? ' is-ready' : ''}`} muted playsInline preload="auto" poster="assets/hero/amplify-first.webp" aria-hidden="true" disablePictureInPicture onError={() => setReady(false)}>
   </video>;
 }
