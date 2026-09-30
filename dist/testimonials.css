@@ -1,27 +1,14 @@
 .has-unique-testimonials>.quotes,.has-unique-testimonials>.quote-controls,.has-unique-testimonials>.quote-mark{display:none}
-.has-unique-testimonials{position:relative;background:radial-gradient(ellipse at 50% 65%,#183e542e,transparent 65%)}
-.has-unique-testimonials .testimonial-heading{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;margin-bottom:48px}
-.has-unique-testimonials .testimonial-heading h2{width:auto;margin:0;font-size:clamp(36px,4.8vw,66px);line-height:1.08;letter-spacing:-.045em}
-.has-unique-testimonials>.section-label{border-top:1px solid #acd4e521;padding-top:20px;margin-bottom:0}
-.unique-testimonial{display:flex;flex-direction:column;align-items:center;padding:48px 0 0;gap:28px}
-.unique-testimonial-copy{position:relative;max-width:880px;width:100%;text-align:center;opacity:1;filter:blur(0);transform:scale(1);transition:opacity .3s ease,filter .3s ease,transform .3s ease}
-.unique-testimonial-copy.is-leaving{opacity:0;filter:blur(5px);transform:scale(.98);transition-duration:.18s}
-.unique-quote-mark{display:block;font:90px/.6 Georgia,serif;color:#8dd6f3;opacity:.55;margin:0 0 18px;user-select:none}
-.unique-testimonial figure{margin:0}
-.unique-testimonial blockquote{font-size:clamp(22px,2.45vw,34px);font-weight:400;line-height:1.55;letter-spacing:-.025em;margin:0;text-wrap:pretty}
-.unique-testimonial figcaption{display:flex;flex-direction:column;gap:9px;margin-top:28px}
-.unique-author{font-size:14px;font-weight:600;color:#e4f4fc}
-.unique-role{font:10px/1.6 'DM Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#91b6ca}
-.unique-author-selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;max-width:100%}
-.unique-author-button{display:flex;align-items:center;justify-content:center;gap:0;min-width:48px;min-height:48px;padding:4px;border:1px solid transparent;border-radius:99px;background:transparent;color:#dceffa;cursor:pointer;transition:background .4s,border-color .4s,box-shadow .4s}
-.unique-avatar{display:grid;place-items:center;flex-shrink:0;width:38px;height:38px;border-radius:50%;background:linear-gradient(140deg,#24465e,#0b2232);border:1px solid #a5d7ed42;font:500 15px 'DM Mono',monospace;box-shadow:inset 0 1px 2px #d4f2ff24}
-.unique-author-button.is-active{background:#d8f2ff;color:#0c2a3d;box-shadow:0 5px 28px #7dceee16;border-color:#f4fcffb3}
-.unique-author-button.is-active .unique-avatar{background:linear-gradient(140deg,#f6fcff,#9ccfe4);color:#14374d;border-color:#50768b44}
-.unique-author-button:hover:not(.is-active){background:#a3dfff10;border-color:#a3dfff24}
-.unique-author-name{display:grid;grid-template-columns:0fr;opacity:0;transition:grid-template-columns .4s,opacity .3s,margin .4s;min-width:0;margin:0}
-.unique-author-name>span{overflow:hidden;white-space:nowrap;font-size:13px;font-weight:600}
-.unique-author-button.is-expanded .unique-author-name{grid-template-columns:1fr;opacity:1;margin:0 12px 0 8px}
-.unique-author-button:focus-visible{outline:2px solid #9cdbf5;outline-offset:4px}
-.unique-testimonial-count{font-size:10px;letter-spacing:.12em;color:#b4d4e5;margin:0}.unique-testimonial-count span{color:#57778a;margin:0 7px}
-@media(max-width:650px){.has-unique-testimonials .testimonial-heading{gap:18px;margin-bottom:32px}.unique-testimonial{gap:24px;padding-top:38px}.unique-testimonial blockquote{font-size:22px;line-height:1.5}.unique-role{font-size:9px;letter-spacing:.08em}.unique-author-selector{gap:4px}.unique-author-button{min-width:44px;min-height:46px;padding:3px}.unique-avatar{width:34px;height:34px}.unique-author-button.is-expanded .unique-author-name{margin-right:8px;margin-left:6px}.unique-author-name>span{font-size:12px}}
-@media(prefers-reduced-motion:reduce){.unique-testimonial *{transition:none!important}.unique-testimonial-copy.is-leaving{opacity:1;filter:none;transform:none}}
+.has-unique-testimonials{position:relative;overflow:hidden;background:#061622}
+.has-unique-testimonials .testimonial-heading{display:flex;justify-content:space-between;align-items:start;margin-bottom:64px}
+.has-unique-testimonials .testimonial-heading h2{width:auto;font-size:clamp(36px,4.8vw,66px);line-height:1.08}
+.design-testimonial{position:relative;max-width:1120px;margin:auto;display:grid;grid-template-columns:90px 1fr;gap:60px;padding:24px 0 12px}
+.design-review-number{position:absolute;left:-5%;top:0;font-size:clamp(220px,31vw,430px);font-weight:800;line-height:1;letter-spacing:-.09em;color:#b5e5ff08;pointer-events:none;user-select:none}.design-review-number span{display:block}
+.design-review-rail{display:flex;flex-direction:column;align-items:center;gap:32px;border-right:1px solid #b3d9eb25;padding-right:35px;color:#8cb2c8}.design-review-rail>span{writing-mode:vertical-rl;font-size:10px;letter-spacing:.16em}.design-review-rail>div{height:120px;width:1px;background:#b3d9eb22}.design-review-rail i{display:block;height:100%;width:100%;background:#a6def6;transform-origin:top}
+.design-review-content{position:relative;min-width:0}.design-review-content figure{margin:0;min-height:360px}.design-review-badge{display:inline-flex;border:1px solid #aadcf533;border-radius:30px;padding:6px 12px;font-size:10px;color:#afd1e2;margin-bottom:26px}.design-review-badge:before{content:'';width:5px;height:5px;background:#8edcfa;border-radius:50%;align-self:center;margin-right:9px}
+.design-review-content blockquote{margin:0 0 32px;font-size:clamp(23px,2.65vw,37px);line-height:1.35;letter-spacing:-.035em;color:#e9f4fb;font-weight:400}.design-review-content blockquote>span{display:inline-block;white-space:pre-wrap}
+.design-review-content figcaption{display:flex;gap:18px;align-items:center}.design-author-line{width:30px;height:1px;background:#a2d7f0}.design-review-content figcaption strong{display:block;font-size:15px;font-weight:500}.design-review-content figcaption div>span{display:block;color:#88aabf;font-size:12px;margin-top:5px}
+.design-review-navigation{display:flex;justify-content:space-between;align-items:center;margin-top:28px;border-top:1px solid #b3d9eb20;padding-top:22px}.design-review-navigation>.mono{font-size:10px;color:#8fb5ca}.design-review-navigation>div{display:flex;gap:10px}.design-review-navigation button{width:48px;height:48px;border:1px solid #b3d9eb40;border-radius:50%;background:transparent;display:grid;place-items:center;color:#dff4ff;transition:background .2s,color .2s}.design-review-navigation button:hover{background:#c9edfd;color:#102b3c}
+@media(max-width:767px){.has-unique-testimonials .testimonial-heading{display:block;margin-bottom:32px}.has-unique-testimonials .testimonial-heading h2{margin-top:20px;font-size:38px}.design-testimonial{grid-template-columns:1fr;gap:22px;padding-top:0}.design-review-rail{flex-direction:row;justify-content:space-between;gap:18px;border:0;padding:0}.design-review-rail>span{writing-mode:horizontal-tb;font-size:9px}.design-review-rail>div{display:none}.design-review-number{top:90px;left:-8%;font-size:260px}.design-review-content figure{min-height:390px}.design-review-content blockquote{font-size:23px;line-height:1.45}.design-review-badge{margin-bottom:22px}.design-review-navigation{margin-top:20px}.design-review-content figcaption div>span{font-size:11px}}
+@media(max-width:380px){.design-review-content figure{min-height:460px}.design-review-content blockquote{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.design-review-number{transform:none!important}.design-review-navigation button{transition:none}}

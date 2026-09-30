@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { Testimonials } from './components/ui/unique-testimonial';
+import { Testimonial } from './components/ui/design-testimonial';
 
 const section = document.querySelector<HTMLElement>('.testimonials');
 const original = section?.querySelector<HTMLElement>('.quotes');
@@ -12,6 +12,6 @@ if (section && original) {
   const mount = document.createElement('div');
   mount.className = 'unique-testimonial-root';
   section.append(mount);
-  createRoot(mount).render(<Testimonials items={items}/>);
+  createRoot(mount).render(<Testimonial items={items}/>);
   section.classList.add('has-unique-testimonials');
 }
