@@ -24,6 +24,7 @@ export function CircleMenu({ items }: { items: Item[] }) {
     setClosing(false);
     trigger.current?.focus({ preventScroll: true });
     if (href) {
+      if (!href.startsWith('#')) { window.location.assign(href); return; }
       const target = document.querySelector<HTMLElement>(href);
       history.pushState(null, '', href);
       target?.setAttribute('tabindex', '-1');
