@@ -12,4 +12,4 @@ await copyFile(optimizedVideo, 'dist/assets/hero/amplify-scroll.mp4');
 for (const asset of ['amplify-first.webp', 'amplify-final.webp']) {
   await copyFile(`src/assets/hero/${asset}`, `dist/assets/hero/${asset}`);
 }
-await build({ entryPoints: ['src/hero.tsx', 'src/work.tsx', 'src/navigation.tsx', 'src/testimonials.tsx', 'src/buttons.tsx', 'src/process.tsx'], outdir: 'dist/interactive', bundle: true, splitting: true, format: 'esm', minify: true, target: 'es2022', sourcemap: false, define: { __HERO_VIDEO_VERSION__: JSON.stringify(videoVersion) } });
+await build({ entryPoints: ['src/hero.tsx', 'src/work.tsx', 'src/navigation.tsx', 'src/testimonials.tsx', 'src/buttons.tsx', 'src/process.tsx', 'src/clients.tsx'], outdir: 'dist/interactive', bundle: true, splitting: true, format: 'esm', minify: true, target: 'es2022', sourcemap: false, define: { __HERO_VIDEO_VERSION__: JSON.stringify(videoVersion) } });

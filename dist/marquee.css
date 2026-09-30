@@ -1,0 +1,10 @@
+.aiq-marquee{display:flex;width:100%;overflow:hidden}
+.aiq-marquee-track{display:flex;flex-shrink:0;width:max-content;animation:aiq-marquee-x var(--marquee-duration,20s) linear infinite}
+.aiq-marquee-group{display:flex;flex-shrink:0}
+.aiq-marquee[data-direction=right]>.aiq-marquee-track,.aiq-marquee[data-direction=down]>.aiq-marquee-track{animation-direction:reverse}
+.aiq-marquee[data-direction=up],.aiq-marquee[data-direction=down],.aiq-marquee[data-direction=up] .aiq-marquee-group,.aiq-marquee[data-direction=down] .aiq-marquee-group{flex-direction:column}
+.aiq-marquee[data-direction=up]>.aiq-marquee-track,.aiq-marquee[data-direction=down]>.aiq-marquee-track{flex-direction:column;width:100%;height:max-content;animation-name:aiq-marquee-y}
+.aiq-marquee[data-pause]:hover>.aiq-marquee-track,.aiq-marquee:focus-within>.aiq-marquee-track{animation-play-state:paused}
+@keyframes aiq-marquee-x{to{transform:translateX(-50%)}}
+@keyframes aiq-marquee-y{to{transform:translateY(-50%)}}
+@media(prefers-reduced-motion:reduce){.aiq-marquee{mask-image:none!important;-webkit-mask-image:none!important}.aiq-marquee-track{animation:none;width:100%}.aiq-marquee-group{width:100%}.aiq-marquee-group[aria-hidden]{display:none}.clients-marquee .client-logo-group{min-width:0}}
