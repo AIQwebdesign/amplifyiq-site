@@ -13,7 +13,7 @@ function showQuote(n){quote=(n+quotes.length)%quotes.length;quotes.forEach((q,i)
 $('#quote-prev').addEventListener('click',()=>showQuote(quote-1));$('#quote-next').addEventListener('click',()=>showQuote(quote+1));
 
 let scrollPending=false;
-function renderScroll(){scrollPending=false;const max=document.documentElement.scrollHeight-innerHeight;$('.page-progress').style.transform=`scaleX(${max>0?scrollY/max:0})`;$('header').classList.toggle('is-scrolled',scrollY>90);
+function renderScroll(){scrollPending=false;const max=document.documentElement.scrollHeight-innerHeight;$('.page-progress').style.transform=`scaleX(${max>0?scrollY/max:0})`;const header=$('header'),hero=$('.expansion-hero');header.classList.toggle('is-scrolled',scrollY>90);header.classList.toggle('is-over-hero',!!hero&&hero.getBoundingClientRect().bottom>header.offsetHeight);
 const signalRect=$('.growth-signal').getBoundingClientRect();const p=Math.max(0,Math.min(1,(innerHeight-signalRect.top)/(innerHeight*.7)));$$('.growth-signal i').forEach((bar,i)=>bar.style.transform=motion.matches?'':`scaleY(${.2+.8*Math.min(1,p*(1.5-i*.15))})`);
 }
 addEventListener("scroll",()=>{if(!scrollPending){scrollPending=true;requestAnimationFrame(renderScroll)}},{passive:true});addEventListener("resize",renderScroll);motion.addEventListener("change",renderScroll);renderScroll();
