@@ -1,38 +1,74 @@
-# AmplifyIQ redesign
+# AmplifyIQ website
 
-An accessible website with an ice-blue cloud atmosphere, an interactive Spline robot, expanding-circle calls to action, a circular scroll reveal and a cinematic footer.
+The current AmplifyIQ marketing website for web design, redesign and digital growth in County Mayo, Ireland. It includes a scroll-controlled video hero, client marquee, services, Quay West Before/After screenshot comparison, project carousel, process presentation, testimonials, contact links, cookie settings and three legal pages. The canonical domain remains https://amplifyiq.ie/.
 
-## Run locally
+## Repository and preservation
 
-Run `pnpm install --frozen-lockfile`, `pnpm build`, then `pnpm start` and open http://127.0.0.1:4173. Deploy the contents of `dist` to a static host. The small React/TypeScript hero is built with esbuild; the main content remains semantic static HTML. `pnpm typecheck` checks the React component. The included lockfile pins dependencies.
+Use this `amplifyiq-site` directory as the Git repository root, not its parent `AmplifyIQ` folder. The parent contains historical staging folders, archives and screenshots, and a separate empty Git repository. Those files remain untouched. All existing website code and legacy assets are retained here; no visual redesign was made for the account transfer.
 
-## Audit and content provenance
+**Do not delete or clean `dist/`.** This project uses a hybrid build: checked-in HTML, CSS, JavaScript and assets in `dist/` are source files, while React bundles and legal pages are generated into the same directory. A fresh checkout must include tracked `dist/` files before building.
 
-The supplied workspace contained only an empty Git repository, with no application code or package manifest. The live amplifyiq.ie page was inspected on 25 September 2026. Its published build uses a bundled JavaScript application, Manrope/DM Mono/Oxanium fonts, and a violet, dark-ink palette. This rebuild keeps Manrope and DM Mono, the original AIQ logo/favicon, four published project screenshots and external links, four exact testimonial texts and attributions, the existing email, WhatsApp number and social links, six process stages, location, response promise and starting price. No business results or awards were added.
+The latest comparison uses `dist/assets/quay-west-before.png` and `dist/assets/quay-west-after.png`, referenced by `dist/index.html` and styled in `dist/redesign.css`.
 
-The FORM STUDIO comparison is explicitly labelled as a conceptual demonstration and is not a client case study. The canonical URL remains the business's existing public domain. No domain or live-site changes are made.
+## Build and local preview
 
-## Architecture
+Validated transfer environment: Node.js 24.19.0 and pnpm 11.19.0. From this directory:
 
-- `dist/index.html`: semantic, indexable page sections, local-business structured data and content.
-- `dist/styles.css`: shared visual tokens, responsive layouts, focus states and reduced-motion presentation.
-- `dist/responsive.css`: mobile-first sizing, touch targets and a shared desktop/mobile curtain reveal.
-- `dist/app.js`: native dialog menu, accessible range comparison, manual testimonial navigation and scroll-driven process.
-- `src/work.tsx` and `src/components/ui/3-d-coverflow-carousel.tsx`: landscape 3D project carousel using the original four project cards, with arrows, pagination, scoped keyboard controls, swipe and pausable autoplay. Replaces the pinned portfolio scroll. Static project cards remain available without JavaScript.
-- `src/hero.tsx` and `src/components/ui/splite.tsx`: supplied lazy React Spline component with a transparent background, mobile sizing, loading/error states and lifecycle handling. Bundled to `dist/interactive`.
-- `dist/refinements.css` and `dist/scroll-effects.js`: supplied liquid-glass, circle inversion and cinematic footer adapted to the existing page.
-- `dist/components.js`: native WebGL adaptation of UI Capsule's Gradient Orb and a pointer-driven adaptation of Manu Arora's Glowing Effect from 21st.dev.
-- `dist/assets`: preserved public brand and project assets plus the generated cloud background (the previous sculpture is retained but unused).
-- `THIRD-PARTY.md`: component provenance and generated-image prompt. Retrieved component source is retained in `reference-components`.
+```sh
+pnpm install --frozen-lockfile
+pnpm build
+pnpm typecheck
+node --test tests/consent.test.mjs
+pnpm start
+```
 
-Animation uses scheduled scroll updates and an orb rendering loop capped at 1.5 device pixel ratio and approximately 30fps. The orb and robot stop offscreen, when hidden and with reduced motion. The hero background uses a 12-second CSS cloud drift on desktop and mobile. The visible pause button was removed as requested. Reduced motion disables ambient animation and switches the portfolio and circle to ordinary/static layouts. Phones use the same swipeable coverflow and a native sticky curtain footer reveal, avoiding scroll-driven transforms and expensive blur. Short screens can scroll through the entire footer. Contact actions open email or WhatsApp; there is no backend form or first-party analytics tracker. The robot scene requires network access to the supplied Spline URL; static text and the cloud hero remain if its loading fails.
+Open http://127.0.0.1:4173. The local server supports extensionless legal page paths and video byte ranges. Hostinger serves the static output directly; it does not need this Node server.
 
-## Validation
+`build.mjs` copies the optimized hero video and its poster images from `src/assets/hero/`, bundles seven React/TypeScript entry points with esbuild into `dist/interactive/`, and runs `build-legal.mjs`. The legal generator uses `src/legal/legal-pack.md`, the homepage and cookie inventory to produce the privacy, cookie and terms pages. The original video and legacy assets remain preserved. Dependencies are pinned by `pnpm-lock.yaml`.
 
-TypeScript, JavaScript syntax and the production bundle are checked. Latest browser checks cover desktop and phone layouts, loaded Spline canvas, removal of the pause control, 21 glass links, both phases of the circle reveal and footer access. No captured browser errors were found. Earlier checks cover comparison keyboard input, testimonial navigation and menu behavior. Reduced-motion behavior is implemented but no operating-system preference emulation was run. No Lighthouse or Core Web Vitals score is claimed.
+## Layout
 
-Responsive update: checked all sections at 320px and 390px phone widths, 768px tablet and 1440px desktop. Verified footer curtain geometry, reachable footer links, menu, comparison keyboard input, carousel controls and testimonials. These are desktop browser viewport checks, not physical iOS/Android device tests.
+- `dist/index.html`: homepage content, metadata and Before/After comparison.
+- `dist/*.css`, `dist/*.js`, `dist/*.mjs`: shared styles, interactions and consent handling.
+- `src/`: React components, source media and legal content.
+- `dist/interactive/`: generated browser bundles.
+- `dist/assets/`: deployed images, fonts and video, including retained legacy assets.
+- `dist/privacy-policy/`, `dist/cookie-policy/`, `dist/terms-of-service/`: generated legal pages.
+- `tests/consent.test.mjs`: consent behavior checks.
+- `THIRD-PARTY.md`, `21ST-DEV.md`, `reference-components/`: component provenance and references.
+- `PRIVACY-AUDIT.md`: existing privacy implementation notes and outstanding content considerations.
 
-Hero update: user-supplied fantasy landscape image and native-scroll expanding video. hero-pingpong.mp4 contains 0-5 seconds forward followed by 5-0 seconds in reverse; the complete 10-second file loops. Mobile uses hero-pingpong-mobile.mp4. Styles: dist/expansion-hero.css; React: src/components/ui/scroll-expansion-hero.tsx. Local preview server supports MP4 byte ranges.
+Contact uses email and WhatsApp links; there is no application backend. Some optional embedded content needs external network access. Review the existing privacy audit before publishing.
 
-High-quality hero: hero-hq-loop.mp4 replaces the earlier desktop/mobile renditions. Both device sizes now use the supplied finalvid.mp4 at 2560x1440, 60fps, encoded as a silent 10-second forward/reverse loop. Service heading decorative arrows and the project slideshow play/pause icon were removed; carousel navigation and pause-on-interaction remain.
+## Hostinger deployment (manual, only after approval)
+
+1. Run the build and checks above. Keep all tracked static files in `dist/`.
+2. Create a ZIP of the **contents** of `dist/`, without an enclosing `dist` directory. The account-transfer archive is `../AmplifyIQ-Hostinger-transfer-2026-10-01.zip`.
+3. Back up the existing Hostinger website before replacing files.
+4. In the intended domain's Hostinger File Manager, upload and extract the archive into its document root (normally `public_html`). Confirm `public_html/index.html` exists directly at the root, alongside `assets/`, `interactive/` and the legal page directories. Do not upload source, dependencies or Git metadata.
+5. After approved deployment, check the homepage, both comparison screenshots, video, menu, contact links, cookie controls and all three legal URLs. Check HTTPS and clear relevant hosting/browser caches if needed.
+
+Creating the ZIP does not upload or publish anything. Hostinger and ChatGPT Sites are separate hosting destinations; no DNS change is required for this local transfer.
+
+## Connect the new GitHub repository
+
+No remote is configured. Existing history is preserved on `main`. Create an empty repository under your intended GitHub user or business organization, without initializing a README, license or gitignore. Authenticate with an account that can write to it, then run from this directory (replace OWNER and REPOSITORY):
+
+```sh
+git remote add origin https://github.com/OWNER/REPOSITORY.git
+git push -u origin main
+```
+
+These commands are manual steps, not actions performed during transfer. GitHub ownership is separate from your ChatGPT login. Connect/authorize GitHub in the new ChatGPT business account if you want it accessible there, granting access to this repository. Set your preferred Git author name/email before future commits. Transfer commits use an explicit Codex automation identity because no local user identity was configured.
+
+## Create a new ChatGPT Site
+
+The inaccessible old account's `project_id` has been removed from `.openai/hosting.json`; the static output setting remains `dist`. The previous link is recoverable from Git history. Historical copies outside this repository have not been changed and must not be used to deploy this project.
+
+In the new business account, open Sites and ask to create a new Site from this existing project, preserving its appearance. Request registration and a saved version only, **without deployment**. Let Sites assign the new project ID; do not reuse the old one or invent an ID. Once registered, verify the new ID is written to this repository's `.openai/hosting.json` and commit that update. Review the saved version and approve publishing separately. Creating a GitHub repository does not automatically create a Site.
+
+Official guidance: https://learn.chatgpt.com/docs/sites
+
+## Transfer verification scope
+
+Run a fresh production build, TypeScript checks and the existing consent tests. Verify root-level `dist/index.html`, its local assets and the ZIP contents. Website presentation files and the latest screenshots must remain unchanged from preservation commit `7b0a987`. These checks are not a new full browser, accessibility or performance audit.
