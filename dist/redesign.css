@@ -18,3 +18,13 @@
 .redesign .comparison{height:auto;aspect-ratio:1672/941}
 .redesign .comparison .concept{padding:0}
 .comparison-screenshot{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
+/* Let the screenshot define the phone frame, rather than the old demo height. */
+@media(max-width:650px){
+ .redesign .comparison{height:auto;aspect-ratio:auto}
+ .redesign .comparison .modern{position:relative;inset:auto}
+ .redesign .comparison .modern .comparison-screenshot{width:100%;height:auto}
+ .redesign .comparison .old .comparison-screenshot{width:100%;height:100%;object-fit:contain}
+ .redesign .comparison-labels{left:10px;right:10px;bottom:8px}
+ .redesign .comparison-labels span{padding:3px 7px;font-size:7px}
+ .redesign .compare-line span{width:44px;height:44px}
+}
