@@ -13,3 +13,5 @@ dialog.cookie-dialog{position:fixed;inset:0;margin:auto;width:min(680px,calc(100
 
 .legal-page .brand img{border-radius:50%;padding:3px}.legal-page header .motion-button{--cta-ink:#e0f3ff;--cta-fill:#d9f1ff;--cta-on:#102e43;background:#b7ddf00a!important}
 dialog.cookie-dialog[open]{animation:none}
+
+@media(max-width:700px){.footer-legal a,.footer-legal button{display:inline-flex;align-items:center;min-height:44px}.cookie-dialog .cookie-actions{position:sticky;bottom:-20px;padding:12px 0;background:#0a202f}.cookie-banner{bottom:max(10px,env(safe-area-inset-bottom))}}

@@ -29,7 +29,7 @@ body:has(.expansion-hero) header .motion-button{--cta-ink:#e0f3ff;--cta-fill:#d9
 body:has(.expansion-hero) .circle-menu-toggle{color:#e9f7ff;background:#14365066}
 @media(max-width:767px){
  .expansion-hero{height:310svh}.expansion-stage{height:100svh;min-height:520px}
- .expansion-media{top:34%;left:-40%;right:-10%;bottom:auto;height:auto;aspect-ratio:16/9;max-height:58svh;-webkit-mask-image:linear-gradient(transparent 0%,#000 30%,#000 74%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 30%,#000 74%,transparent 100%)}
+ .expansion-media{top:calc(34% + 24px);left:-40%;right:-10%;bottom:auto;height:auto;aspect-ratio:16/9;max-height:58svh;-webkit-mask-image:linear-gradient(transparent 0%,#000 30%,#000 74%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 30%,#000 74%,transparent 100%)}
  .expansion-video{object-fit:cover;object-position:center}
  .expansion-shade{background:linear-gradient(180deg,#03101f00 30%,#03101f18 45%,transparent 65%,#03101f80 92%)}
  .story-topline{top:106px;left:6%;right:6%;font-size:8px;gap:20px}.story-topline>span:last-child{max-width:110px}
@@ -40,7 +40,7 @@ body:has(.expansion-hero) .circle-menu-toggle{color:#e9f7ff;background:#14365066
  .story-final .motion-button{margin-top:20px;height:48px;min-height:48px;font-size:12px;min-width:195px}
  .story-footer{left:6%;right:6%;bottom:24px;font-size:8px;gap:14px}.story-footer>span:last-child{max-width:96px;text-align:right}
 }
-@media(max-width:767px) and (max-height:650px){.story-topline{top:92px}.story-copy{top:25%}.story-beat h1,.story-beat h2{font-size:9.6vw}.story-services h2{font-size:8.2vw}.story-beat p{margin-top:12px}.expansion-media{top:43%;height:auto;max-height:53svh}.story-footer{bottom:16px}}
+@media(max-width:767px) and (max-height:650px){.story-topline{top:92px}.story-copy{top:25%}.story-beat h1,.story-beat h2{font-size:9.6vw}.story-services h2{font-size:8.2vw}.story-beat p{margin-top:12px}.expansion-media{top:calc(43% + 24px);height:auto;max-height:53svh}.story-footer{bottom:16px}}
 @media(max-height:600px) and (min-width:768px){.story-topline{top:90px}.story-copy{top:29%;bottom:12%}.story-beat h1,.story-beat h2{font-size:clamp(40px,5vw,70px)}.story-beat p{margin-top:12px}.story-final .motion-button{margin-top:15px}.story-footer{bottom:15px}}
 @media(prefers-reduced-motion:reduce){
  .expansion-hero{height:100svh;min-height:520px}.expansion-stage{height:100svh;min-height:520px}

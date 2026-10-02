@@ -53,6 +53,8 @@ function save(functional) {
   // stops further use; this origin cannot delete cookies owned by Google.
 }
 document.addEventListener('click', event => {
+  const enableMap = event.target.closest('[data-enable-map]');
+  if (enableMap) { event.preventDefault(); save(true); return; }
   const settings = event.target.closest('[data-cookie-settings]');
   if (settings) { event.preventDefault(); openSettings(settings); return; }
   const button = event.target.closest('[data-choice]');
