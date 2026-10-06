@@ -1,0 +1,2 @@
+# Serve JavaScript modules with the MIME type required by browsers.
+AddType application/javascript .mjs

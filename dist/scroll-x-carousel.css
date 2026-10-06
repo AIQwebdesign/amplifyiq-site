@@ -1,0 +1,39 @@
+/* Full landscape customer screenshots; captions never cover the artwork. */
+.work.work-scroll-x{overflow:visible;padding-bottom:0}
+.scroll-x-carousel{--work-card:min(76vw,1000px);--work-gap:32px;position:relative;height:calc(100svh + var(--work-travel,0px))}
+.scroll-x-container{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:100px 0 32px;overflow:hidden;background:#07131f}
+.scroll-x-top,.scroll-x-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 6%;color:#b6d2e3}
+.scroll-x-top .mono,.scroll-x-bottom .mono{font-size:11px;font-variant-numeric:tabular-nums}
+.scroll-x-hint{display:flex;align-items:center;gap:10px;font-size:12px}
+.scroll-x-viewport{overflow:clip;width:100%;flex-shrink:0;container-type:inline-size}
+.scroll-x-track{display:flex;gap:var(--work-gap);width:max-content;padding:0 calc((100cqw - var(--work-card))/2)}
+.scroll-x-card{flex:0 0 var(--work-card);width:var(--work-card);min-width:0}
+.scroll-x-image{display:block;aspect-ratio:1265/712;max-height:min(52svh,calc(100svh - 360px));background:#102638;border:1px solid #b9deef33;border-radius:14px;overflow:hidden}
+.scroll-x-image img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;user-select:none}
+.scroll-x-caption{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0 0}
+.scroll-x-meta{color:#9abed4;font-size:9px;letter-spacing:.03em}
+.scroll-x-caption h3{font-size:clamp(26px,3vw,42px);letter-spacing:-.035em;margin-top:8px}
+.scroll-x-caption p{color:#b0c3d2;font-size:13px;line-height:1.5;margin-top:8px;max-width:48ch}
+.scroll-x-visit{display:inline-flex;align-items:center;gap:14px;min-height:44px;white-space:nowrap;font-size:13px;border-bottom:1px solid #90b8ce}
+.scroll-x-progress{height:2px;background:#254050;flex:1;max-width:480px;overflow:hidden}
+.scroll-x-progress>div{height:100%;background:#a1e1fc;transform-origin:left}
+.scroll-x-controls{display:flex;align-items:center;gap:2px}
+.scroll-x-controls button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #9cc9e044;border-radius:50%;background:transparent;color:#e1f3fc}
+.scroll-x-controls button:disabled{opacity:.35;cursor:default}
+.scroll-x-controls .scroll-x-dot{border:0;width:28px;border-radius:0}
+.scroll-x-dot span{width:5px;height:5px;background:#7699b0;border-radius:50%}
+.scroll-x-dot[aria-current] span{background:#d1f1ff;width:8px;height:8px}
+@media(hover:hover) and (pointer:fine){.scroll-x-visit:hover{color:#a1e1fc}.scroll-x-controls button:enabled:hover{background:#183548}}
+@media(max-width:650px){
+ .scroll-x-carousel{--work-card:88vw;--work-gap:20px}
+ .scroll-x-container{gap:24px;padding:96px 0 32px}
+ .scroll-x-top,.scroll-x-bottom{gap:12px}.scroll-x-top .mono{font-size:9px}.scroll-x-hint{font-size:11px}
+ .scroll-x-caption{display:block;padding-top:18px}.scroll-x-meta{font-size:8px}.scroll-x-caption h3{font-size:30px}
+ .scroll-x-caption p{min-height:40px}.scroll-x-visit{margin-top:10px}
+ .scroll-x-bottom{flex-wrap:wrap}.scroll-x-progress{max-width:none}.scroll-x-controls{width:100%;justify-content:center}.scroll-x-controls .scroll-x-dot{width:44px}
+}
+.scroll-x-carousel[data-native]{height:auto}
+.scroll-x-carousel[data-native] .scroll-x-container{position:relative;height:auto;min-height:0;padding-top:32px}
+.scroll-x-carousel[data-native] .scroll-x-viewport{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-color:#90b8ce #102638}
+.scroll-x-carousel[data-native] .scroll-x-card{scroll-snap-align:center}
+.scroll-x-carousel[data-native] .scroll-x-image{max-height:none}

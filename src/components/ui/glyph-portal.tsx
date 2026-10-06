@@ -412,13 +412,13 @@ export default function GlyphPortal({
         <span data-gp-fallback aria-hidden="true" style={{ fontFamily, fontWeight: weight }}>{text}</span>
         <div data-gp-caption>
           <span data-gp-hint aria-hidden="true">{interactive ? "Scroll to enter." : annotations ? "A passage through type" : ""}</span>
-          <a data-gp-enter href={`#${uid}-content`} onClick={(event) => {
+          {enterLabel && <a data-gp-enter href={`#${uid}-content`} onClick={(event) => {
             const content = sectionRef.current?.querySelector<HTMLElement>('[data-gp-content]');
             if (!content) return;
             event.preventDefault();
             content.scrollIntoView({ behavior: 'instant', block: 'start' });
             content.focus({ preventScroll: true });
-          }}>{enterLabel}<span aria-hidden="true">↘</span></a>
+          }}>{enterLabel}<span aria-hidden="true">↘</span></a>}
         </div>
       </div>
       <div data-gp-content id={`${uid}-content`} tabIndex={-1}>

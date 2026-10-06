@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
-import { CoverFlowCarousel, type CarouselItem } from './components/ui/3-d-coverflow-carousel';
+import type { CarouselItem } from './components/ui/3-d-coverflow-carousel';
+import CustomerPaperCarousel from './components/ui/customer-paper-carousel';
 
 const track=document.querySelector<HTMLElement>('.work-track');
 if(track){
@@ -12,6 +13,6 @@ if(track){
     alt:card.querySelector('img')!.alt,
     url:card.querySelector<HTMLAnchorElement>('.project-image')!.href
   }));
-  track.className='coverflow-root';
-  createRoot(track).render(<CoverFlowCarousel items={items}/>);
+  track.className='paper-curl-root';
+  createRoot(track).render(<CustomerPaperCarousel items={items}/>);
 }

@@ -7,7 +7,6 @@ toggle.addEventListener('click',()=>{menu.showModal();toggle.setAttribute('aria-
 $('.menu-close').addEventListener('click',closeMenu);
 menu.addEventListener('cancel',()=>{toggle.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open')});
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
-$('#comparison').addEventListener('input',e=>$('.comparison').style.setProperty('--split',e.target.value+'%'));
 let quote=0;const quotes=$$('.quotes figure');
 function showQuote(n){quote=(n+quotes.length)%quotes.length;quotes.forEach((q,i)=>q.hidden=i!==quote);$('#quote-count').textContent=String(quote+1).padStart(2,'0')+' / 04'}
 $('#quote-prev').addEventListener('click',()=>showQuote(quote-1));$('#quote-next').addEventListener('click',()=>showQuote(quote+1));

@@ -1,4 +1,4 @@
-import { KEY, VERSION, defaults, createConsent, parseConsent } from './consent-core.mjs';
+import { KEY, VERSION, defaults, createConsent, parseConsent } from './consent-core.mjs?v=20261003';
 
 let consent = null, opener = null, expiryTimer;
 try { consent = parseConsent(localStorage.getItem(KEY)); if (!consent) localStorage.removeItem(KEY); } catch {}

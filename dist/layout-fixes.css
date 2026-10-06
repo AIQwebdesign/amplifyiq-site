@@ -20,9 +20,7 @@ footer.cinematic-footer{position:sticky;top:0;bottom:auto;height:var(--footer-he
 @media(max-width:360px){.footer-curtain{--footer-height:max(100svh,860px)}.hero{min-height:720px}.hero-intro p{font-size:28px}}
 @media(prefers-reduced-motion:reduce){.footer-curtain{height:var(--footer-height);margin-top:0}footer.cinematic-footer{position:relative;top:auto}.footer-contact-anchor{top:0}}
 
-/* Keep mobile footer controls in normal flow, clear of the location section. */
-@media(max-width:650px){
- .footer-curtain{height:auto;min-height:0;margin-top:0}
- footer.cinematic-footer{position:relative;inset:auto;height:auto;min-height:var(--footer-height)}
- .footer-contact-anchor{top:0}
+/* Reveal behind main on phones too; tall footers must scroll fully into view. */
+@media(max-width:650px) and (prefers-reduced-motion:no-preference){
+ footer.cinematic-footer{top:calc(100svh - var(--footer-height))}
 }

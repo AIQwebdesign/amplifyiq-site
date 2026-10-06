@@ -7,6 +7,7 @@ type Review = { quote: string; author: string; role: string };
 export function Testimonial({ items }: { items: Review[] }) {
   const [active, setActive] = useState(0);
   const [manual, setManual] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(!document.hidden);
   const root = useRef<HTMLDivElement>(null);
@@ -22,14 +23,14 @@ export function Testimonial({ items }: { items: Review[] }) {
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', change); };
   }, []);
   useEffect(() => {
-    if (manual || reduced || !visible || !pageVisible || items.length < 2) return;
-    const timer = setInterval(() => setActive(i => (i + 1) % items.length), 3000);
+    if (manual || focused || reduced || !visible || !pageVisible || items.length < 2) return;
+    const timer = setInterval(() => setActive(i => (i + 1) % items.length), 7000);
     return () => clearInterval(timer);
-  }, [manual, reduced, visible, pageVisible, items.length]);
+  }, [manual, focused, reduced, visible, pageVisible, items.length]);
   const current = items[active];
   const change = (step: number) => { setManual(true); setActive(i => (i + step + items.length) % items.length); };
   return <div ref={root} className="design-testimonial" data-playback={manual || reduced ? 'manual' : 'auto'}
-    onPointerDown={() => setManual(true)} onFocusCapture={() => setManual(true)}
+    onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false); }}
     onPointerMove={event => { if (reduced || event.pointerType !== 'mouse') return; const rect = event.currentTarget.getBoundingClientRect(); mouseX.set((event.clientX - rect.left - rect.width / 2) * .025); mouseY.set((event.clientY - rect.top - rect.height / 2) * .025); }}
     onPointerLeave={() => { mouseX.set(0); mouseY.set(0); }}>
     <motion.div className="design-review-number" style={{ x, y }} aria-hidden="true">
@@ -42,7 +43,7 @@ export function Testimonial({ items }: { items: Review[] }) {
         <blockquote aria-label={current.quote}>{current.quote.split(' ').map((word, i) => <motion.span aria-hidden="true" key={i} initial={{ opacity: 0, y: reduced ? 0 : 12, rotateX: reduced ? 0 : 35 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ duration: reduced ? 0 : .35, delay: reduced ? 0 : Math.min(i * .012, .42) }}>{word}{' '}</motion.span>)}</blockquote>
         <figcaption><span className="design-author-line" aria-hidden="true"/><div><strong>{current.author}</strong><span>{current.role}</span></div></figcaption>
       </motion.figure></AnimatePresence>
-      <div className="design-review-navigation"><span className="mono">{String(active + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span><div><button type="button" aria-label="Previous testimonial" onClick={() => change(-1)}><ArrowLeft size={19}/></button><button type="button" aria-label="Next testimonial" onClick={() => change(1)}><ArrowRight size={19}/></button></div></div>
+      <div className="design-review-navigation"><span className="mono">{String(active + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span><div>{!reduced && <button type="button" aria-label={manual ? 'Play testimonials' : 'Pause testimonials'} onClick={() => setManual(value => !value)}>{manual ? '▶' : 'Ⅱ'}</button>}<button type="button" aria-label="Previous testimonial" onClick={() => change(-1)}><ArrowLeft size={19}/></button><button type="button" aria-label="Next testimonial" onClick={() => change(1)}><ArrowRight size={19}/></button></div></div>
     </div>
   </div>;
 }

@@ -1,0 +1,20 @@
+.customer-paper-carousel{--color-background:#07131f;--color-foreground:#edf7ff;--color-muted-foreground:#a9c7d9;--color-border:#9cc9e044;--color-primary:#a1e1fc;width:88%;max-width:1100px;margin:0 auto}
+.customer-paper-top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:12px 0 24px;color:#b6d2e3;font-size:12px}
+.customer-paper-top .mono{font-size:11px}
+.customer-paper-carousel .pcc-root{border:1px solid var(--color-border);border-radius:14px}
+.customer-paper-carousel .pcc-stage{flex:none;width:100%;aspect-ratio:1265/712;background:#081724!important}
+.customer-paper-carousel .pcc-btn{width:44px;height:44px}
+.customer-paper-carousel .pcc-rail{height:auto;min-height:72px;padding:12px 20px;gap:12px}
+.customer-paper-carousel .pcc-caption{flex-wrap:wrap;gap:4px 16px}
+.customer-paper-carousel .pcc-title{flex-shrink:1}
+.customer-paper-details{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:24px}
+.customer-paper-details .mono{font-size:10px;color:#9abed4}
+.customer-paper-details h3{font-size:clamp(28px,3vw,42px);letter-spacing:-.035em;margin-top:10px}
+.customer-paper-details p{font-size:14px;line-height:1.6;color:#b0c3d2;margin-top:10px;max-width:52ch}
+.customer-paper-details>a{display:inline-flex;align-items:center;gap:16px;min-height:44px;white-space:nowrap;border-bottom:1px solid #90b8ce;font-size:13px}
+.customer-paper-dots{display:flex;justify-content:center;margin-top:24px}
+.customer-paper-dots button{display:grid;place-items:center;width:44px;height:44px;border:0;background:none;border-radius:50%;padding:0}
+.customer-paper-dots span{width:6px;height:6px;border-radius:50%;background:#789aaf}
+.customer-paper-dots [aria-current] span{width:10px;height:10px;background:#c9eeff}
+@media(hover:hover) and (pointer:fine){.customer-paper-details>a:hover{color:#a1e1fc}}
+@media(max-width:650px){.customer-paper-top{font-size:10px;gap:12px}.customer-paper-top .mono{font-size:9px}.customer-paper-carousel .pcc-rail{padding:12px;align-items:center}.customer-paper-carousel .pcc-caption{font-size:13px;display:block}.customer-paper-carousel .pcc-count{display:block;font-size:11px}.customer-paper-carousel .pcc-title{display:block;margin-top:4px}.customer-paper-details{display:block;margin-top:20px}.customer-paper-details .mono{font-size:9px}.customer-paper-details p{font-size:13px}.customer-paper-details>a{margin-top:16px}}

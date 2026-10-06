@@ -10,9 +10,9 @@ if (host) {
   }));
   host.className = 'process-portal-host';
   createRoot(host).render(
-    <GlyphPortal word="PROCESS" focusChar="R" interactive={false} scrollLength={1.7}
+    <GlyphPortal word="PROCESS" focusChar="C" interactive={false} scrollLength={1.7}
       fontFamily="Arial, sans-serif" fontWeight={900} className="process-portal"
-      enterLabel="Explore the six stages"
+      enterLabel=""
       style={{ '--gp-paper': '#edf4f7', '--gp-ink': '#123348', '--gp-field': '#092638', '--gp-foreground': '#edf7fb' }}
       background={<div className="process-portal-scene"><img src="assets/hero-first-frame.webp" alt="" loading="lazy"/><div className="process-portal-grid"/></div>}
       front={<>

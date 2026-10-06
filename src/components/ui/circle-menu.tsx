@@ -1,3 +1,4 @@
+import { navigateSection } from '../../section-routes';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -24,6 +25,7 @@ export function CircleMenu({ items }: { items: Item[] }) {
     setClosing(false);
     trigger.current?.focus({ preventScroll: true });
     if (href) {
+      if (navigateSection(href)) return;
       if (!href.startsWith('#')) { window.location.assign(href); return; }
       const target = document.querySelector<HTMLElement>(href);
       history.pushState(null, '', href);
